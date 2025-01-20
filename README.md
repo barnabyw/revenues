@@ -34,8 +34,8 @@ This script calculates the arbitrage revenue potential for energy storage system
 
 ## Input Data Format
 - CSV files with the following columns:
-  - `Datetime`: a column containing time intervals. The format can be specified using the datetime_format parameter and the column header by the datetime_col parameter.
-  - `Price`: Market price data. The column header can be specified with price_col.
+  - `Datetime`: a column containing time intervals. The format can be specified using the `datetime_format` parameter and the column header by the `datetime_col` parameter.
+  - `Price`: Market price data. The column header can be specified with `price_col`.
 
 ## Output
 - CSV files with daily price spreads and arbitrage revenue results.
