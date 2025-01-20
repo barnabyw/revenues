@@ -53,3 +53,46 @@ This script calculates the arbitrage revenue potential for energy storage system
   - Input and results folder paths.
   - List of files and years to process.
   - Hourly storage durations to evaluate.
+
+# Full startup intructions
+
+Here’s a README.md snippet for steps 1-3:
+
+markdown
+Copy code
+# Project Setup Instructions
+
+Follow these steps to set up the project and test the script.
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/barnabyw/revenues/
+cd <your-repo-folder>
+
+## 2. Set Up a Virtual Environment
+Create a new Python virtual environment:
+
+```bash
+Copy code
+python3 -m venv venv
+Activate the virtual environment:
+
+On Mac/Linux:
+bash
+Copy code
+source venv/bin/activate
+On Windows:
+bash
+Copy code
+venv\Scripts\activate
+
+##3. Install Dependencies
+Ensure you have a requirements.txt file in the repository. Install the dependencies:
+
+bash
+Copy code
+pip install -r requirements.txt
+
