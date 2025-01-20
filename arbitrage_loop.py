@@ -6,19 +6,23 @@ import warnings
 # Suppress warnings
 warnings.filterwarnings("ignore")
 
-# Folder paths
-input_folder = "/Users/barnabywinser/Library/CloudStorage/OneDrive-SharedLibraries-Rheenergise/Commercial - Documents/Market data & analysis/Data bank/Market Data/Europe 17.01.25/"
-results_folder = "/Users/barnabywinser/Documents/poland revenues/"
+# Get the folder containing the script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Folder paths relative to the script's directory
+input_folder = os.path.join(script_dir, "input_data")
+results_folder = os.path.join(script_dir, "results")
+os.makedirs(results_folder, exist_ok=True)
 
 # Parameters for storage
 rte = 0.8  # Round-trip efficiency
 max_charge_rate = 1  # MW
 max_discharge_rate = 1 # MW
 hrs = 4  # hours of storage duration
-battery_capacity = max_discharge_rate * hrs  # MWh
-initial_soc = 0.5  # Initial state-of-charge
-min_soc = 0  # Minimum SOC (proportion)
-max_soc = 1  # Maximum SOC (proportion)
+battery_capacity = max_discharge_rate * hrs  # MWh energy capacity
+initial_soc = 0.5  # Initial state-of-charge (proportion of energy capacity)
+min_soc = 0  # Minimum SOC (proportion of energy capacity)
+max_soc = 1  # Maximum SOC (proportion of energy capacity)
 
 # Loop information
 files = ['Poland', 'United Kingdom'] # loop through these files within input_folder
@@ -148,19 +152,19 @@ for file in files:
                # results.to_csv(os.path.join(results_folder, f"{file}_{year}_{hours}_arbitrage_results.csv"))
 
                 central_results.append({
-                    "country": file,
-                    "year": year,
-                    "hours": hours,
+                    "Country": file,
+                    "Year": year,
+                    "System duration (hrs)": hours,
                     "daily_spread_avg": round(daily_spread['daily_spread'].mean(), 2),
-                    "total_arbitrage_profit": round(total_profit, 2),
-                    "cycles": round(cycles, 2),
-                    "avg_sell_price": round(avg_sell_price, 2),
-                    "avg_buy_price": round(avg_buy_price, 2),
+                    "Total arbitrage profit": round(total_profit, 2),
+                    "Cycles (full cycle equivalents)": round(cycles, 2),
+                    "Avg sell price (/MWh)": round(avg_sell_price, 2),
+                    "Avg purchase price (/MWh)": round(-avg_buy_price, 2),
                     "Cost €/MW": round(cost_per_mw.get(hours, 0), 2)
                 })
 
 # Save central results to a CSV
 central_results_df = pd.DataFrame(central_results)
-central_results_df.to_csv(os.path.join(results_folder, "central_results_2.csv"), index=False)
+central_results_df.to_csv(os.path.join(results_folder, "arbitrage_results.csv"), index=False)
 
 print("Processing complete.")
