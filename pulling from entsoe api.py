@@ -12,7 +12,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # Replace with your actual API key
-API_KEY = '52ffc519-ffbd-4a56-b988-5b3df166ea36'
+API_KEY = ''
 # EIC code for the United Kingdom
 EIC_CODE = '10YPL-AREA-----S'
 # Define the time interval
