@@ -92,5 +92,5 @@ pip install -r requirements.txt
 ## 4. Run the script
 Run the script:
 ```bash
-python script_name.py
+python arbitrage_loop.py
 ```
