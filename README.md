@@ -70,9 +70,8 @@ cd <your-repo-folder>
 Create a new Python virtual environment:
 ```bash
 python3 -m venv venv
-Activate the virtual environment:
 ```
-
+Activate the virtual environment:
 # On Mac/Linux:
 ```bash
 source venv/bin/activate
