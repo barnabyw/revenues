@@ -37,6 +37,12 @@ This script calculates the arbitrage revenue potential for energy storage system
   - `Datetime`: a column containing time intervals. The format can be specified using the `datetime_format` parameter and the column header by the `datetime_col` parameter.
   - `Price`: Market price data. The column header can be specified with `price_col`.
 
+## Input Data Sources
+- The `input_data` folder comes with German, Polish and United Kingdom hourly day-ahead electricity prices from 2016 to the start of 2025 as default.
+- These were downloaded from Ember https://ember-energy.org/data/european-wholesale-electricity-price-data/, which provides a user friendly, cleaned dataset of European day-ahead market prices.
+- For prices from the USA, gridstatus is a good tool.
+- For other juristictions, price data is often available from the energy system operator. E.g. Chile: https://www.coordinador.cl/costos-marginales/
+
 ## Output
 - CSV files with daily price spreads and arbitrage revenue results.
 - Summary of results across all files and configurations saved in `central_results_2.csv`.
