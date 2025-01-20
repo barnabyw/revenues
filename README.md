@@ -28,7 +28,7 @@ This script calculates the arbitrage revenue potential for energy storage system
 2. Modify the script parameters (e.g., storage configurations, file paths) as needed.
 3. Run the script:
    ```bash
-   python script_name.py
+   python arbitrage_loop.py
    ```
 4. Results will be saved in the specified results folder.
 
