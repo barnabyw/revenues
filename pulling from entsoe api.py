@@ -14,11 +14,11 @@ from datetime import datetime, timedelta
 # Replace with your actual API key
 API_KEY = '52ffc519-ffbd-4a56-b988-5b3df166ea36'
 # EIC code for the United Kingdom
-EIC_CODE = '10Y1001A1001A82H'
+EIC_CODE = '10YPL-AREA-----S'
 # Define the time interval
 
-start = '2020-01-01-00:00' #yyyyMMddHHmm
-end = '2020-12-31-23:00'
+start = '2024-01-01-00:00' #yyyyMMddHHmm
+end = '2024-12-31-23:00'
 
 period_start = start.replace("-","").replace(":","")  # UTC yyyyMMddHHmm
 period_end = end.replace("-","").replace(":","")    # UTC yyyyMMddHHmm

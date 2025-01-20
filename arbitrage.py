@@ -8,9 +8,9 @@ results_folder = "/Users/barnabywinser/Library/CloudStorage/OneDrive-SharedLibra
 datetime_col = "Datetime (Local)"
 price_col = "Price (EUR/MWhe)"
 datetime_format = "%d/%m/%Y %H:%M"
+file_name = "UK.csv"
 
 # Inputs
-file_name = "UK.csv"
 rte = 0.8  # Round-trip efficiency
 max_charge_rate = 5  # MW
 max_discharge_rate = 5  # MW
@@ -91,6 +91,6 @@ if status == solver.OPTIMAL:
     print(f"Number of cycles: {cycles:.2f}")
 
     # Save results to Excel
-    results.to_csv(results_folder + file_name+ "arbitrage_results.csv")
+    results.to_csv(results_folder + file_name + "arbitrage_results.csv")
 else:
     print("No optimal solution found.")
