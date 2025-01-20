@@ -3,29 +3,33 @@ import os
 from ortools.linear_solver import pywraplp
 import warnings
 
-# Suppress all warnings
+# Suppress warnings
 warnings.filterwarnings("ignore")
 
 # Folder paths
 input_folder = "/Users/barnabywinser/Library/CloudStorage/OneDrive-SharedLibraries-Rheenergise/Commercial - Documents/Market data & analysis/Data bank/Market Data/Europe 17.01.25/"
 results_folder = "/Users/barnabywinser/Documents/poland revenues/"
 
-# Parameters
-files = ['Poland', 'United Kingdom']
-datetime_col = "Datetime (Local)"
-price_col = "Price (EUR/MWhe)"
-datetime_format = "%Y-%m-%d %H:%M:%S"
-hours_list = list(range(1,17))
+# Parameters for storage
 rte = 0.8  # Round-trip efficiency
 max_charge_rate = 1  # MW
-max_discharge_rate = 1  # MW
-hrs = 4  # hours
+max_discharge_rate = 1 # MW
+hrs = 4  # hours of storage duration
 battery_capacity = max_discharge_rate * hrs  # MWh
 initial_soc = 0.5  # Initial state-of-charge
-min_soc = 0  # Minimum SOC
-max_soc = 1  # Maximum SOC
-years_mode = ""  # Set to 'auto' to use all years in the data
+min_soc = 0  # Minimum SOC (proportion)
+max_soc = 1  # Maximum SOC (proportion)
+
+# Loop information
+files = ['Poland', 'United Kingdom'] # loop through these files within input_folder
+years_mode = ""  # Set to 'auto' to use all years in the data (will loop through)
 select_years = list(range(2019, 2025))  # Specify the range of years to process
+hours_list = list(range(1,17)) # hours of storage duration to loop through
+
+# Format of input price data
+datetime_col = "Datetime (Local)" # the column heading containing time data
+datetime_format = "%Y-%m-%d %H:%M:%S" # the format of the time data
+price_col = "Price (EUR/MWhe)" # the column for price data
 
 # Cost €/MW values for each hour
 cost_per_mw = {
@@ -113,7 +117,7 @@ def calculate_arbitrage_revenue(df, hrs):
 
         return results, total_profit, cycles, avg_sell_price, avg_buy_price
     else:
-        print("No optimal solution found.")
+        print(f"No optimal solution found for {file} in {year}.")
         return None, 0, 0, 0, 0
 
 # Main loop
@@ -141,18 +145,18 @@ for file in files:
             daily_spread = spread(yearly_df, hours)
             results, total_profit, cycles, avg_sell_price, avg_buy_price = calculate_arbitrage_revenue(yearly_df, hours)
             if results is not None:
-                results.to_csv(os.path.join(results_folder, f"{file}_{year}_{hours}_arbitrage_results.csv"))
+               # results.to_csv(os.path.join(results_folder, f"{file}_{year}_{hours}_arbitrage_results.csv"))
 
                 central_results.append({
                     "country": file,
                     "year": year,
                     "hours": hours,
-                    "daily_spread_avg": daily_spread['daily_spread'].mean(),
-                    "total_arbitrage_profit": total_profit,
-                    "cycles": cycles,
-                    "avg_sell_price": avg_sell_price,
-                    "avg_buy_price": avg_buy_price,
-                    "Cost €/MW": cost_per_mw.get(hours, 0)
+                    "daily_spread_avg": round(daily_spread['daily_spread'].mean(), 2),
+                    "total_arbitrage_profit": round(total_profit, 2),
+                    "cycles": round(cycles, 2),
+                    "avg_sell_price": round(avg_sell_price, 2),
+                    "avg_buy_price": round(avg_buy_price, 2),
+                    "Cost €/MW": round(cost_per_mw.get(hours, 0), 2)
                 })
 
 # Save central results to a CSV
