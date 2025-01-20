@@ -9,7 +9,7 @@ Created on Wed Oct 16 09:24:10 2024
 import requests
 import pandas as pd
 
-my_api_key = "4a1b25c2-3101-48cd-bfd0-13f0c30b353e"
+my_api_key = ""
 base_url = "https://api.ember-climate.org"
 
 query_url = (
