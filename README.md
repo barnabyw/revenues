@@ -88,3 +88,9 @@ Ensure you have a requirements.txt file in the repository. Install the dependenc
 ```bash
 pip install -r requirements.txt
 ```
+
+## 4. Run the script
+Run the script:
+```bash
+python script_name.py
+```
