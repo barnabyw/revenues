@@ -8,7 +8,7 @@ This script calculates the arbitrage revenue potential for energy storage system
 - Computes daily price spreads.
 - Optimizes energy storage operations for maximum revenue.
 - Supports custom storage configurations including efficiency, capacity, and state of charge limits.
-- Outputs results to CSV files for further analysis.
+- Outputs results to CSV files for visualisation/further analysis.
 
 ## Requirements
 - Python 3.x
