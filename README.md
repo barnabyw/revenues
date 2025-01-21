@@ -1,5 +1,15 @@
 # Energy Storage Arbitrage Revenue Optimization
 
+## Context
+
+# Energy arbitrage
+![image](https://github.com/user-attachments/assets/c81d2631-2bae-439e-8ac4-ea18729c4e45)
+
+# Electricity market 101
+Electricity is priced according to 'marginal cost pricing', which means the 
+![image](https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a)
+
+
 ## Description
 This script calculates the arbitrage revenue potential for energy storage systems using market price data. It allows the calculation of optimal arbitrage profit, no. of cycles, avg. buy and sell prices, subject to different storage parameters. It employs the OR-Tools optimization library to simulate optimal charging and discharging behavior based on specified storage parameters.
 
