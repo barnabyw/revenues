@@ -9,13 +9,19 @@ Energy arbitrage is buying power at low prices and selling at high prices, to ge
 ## Electricity market 101
 
 ### Marginal cost pricing
-Electricity, in the vast  is priced according to 'marginal cost pricing', which means the price is set by the bid of the final unit of generation (supply) that is required to meet energy demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the the most expensive generator once bids are ordered.
+Electricity, in the vast majority of countries, is priced according to 'marginal cost pricing' which means the price is set by the bid of the final unit of generation (supply) that is required to meet electricity demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the the most expensive generator once bids are ordered.
 ![image](https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a)
 
 ### Multiple markets
-There are several markets, within countries where power is bought and sold. They mostly work with marginal cost pricing, but operate over different timeframes and have different objectives. [Modo](https://modoenergy.com/research/wholesale-trading-markets-explainer-gb-n2ex-epex-dayahead-intraday) have a helpful explainer for these different markets
+There are several markets, within countries, where power is bought and sold (wholesale markets). They mostly work with marginal cost pricing, but operate over different timeframes and have different objectives. [Modo](https://modoenergy.com/research/wholesale-trading-markets-explainer-gb-n2ex-epex-dayahead-intraday) have a helpful explainer for these different markets in terms of wholesale trading.
 
 Day-ahead markets are where the majority of energy is traded, and where data is most widely available. However, it is important to note that day-ahead markets usually have the least volatile shapes and therefore trading across multiple markets will increase revenue. In GB, [Modo](https://modoenergy.com/research/jan-24-forecast-update-bess-revenues-intraday-prices-dispatch-battery-energy-storage-model?&utm_source=linkedin&utm_medium=main&utm_campaign=15_01_2025) estimated that there is a 30-35% uplift in revenues when trading in the intraday and day-ahead markets vs. just the day-ahead. This could be an appropriate uplift for revenues derived using this script.
+
+### Other revenue streams
+
+A major source of revenue, particularly in the UK is the balancing mechanism
+
+There are other mechanisms that reward energy storage assets outside of energy trading. Capacity markets operate in most countries and pay a fixed price for power capacity, which is reduced for short durations. In   (Australia is an [exception](https://www.gridcog.com/blog/capacity-markets-vs-energy-only-markets#:~:text=Capacity%20markets%20give%20more%20direct,of%20revenue%20certainty%20for%20investors.)), which
 
 # Script setup and features
 This script calculates the arbitrage revenue potential for energy storage systems using market price data. It allows the calculation of optimal arbitrage profit, no. of cycles, avg. buy and sell prices, subject to different storage parameters. It employs the OR-Tools optimization library to simulate optimal charging and discharging behavior based on specified storage parameters.
