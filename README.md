@@ -3,10 +3,13 @@
 # Context
 
 ## Energy arbitrage
+Energy arbitrage is buying power at low prices and selling at high prices, to generate a profit. It is the primary way energy storage systems make their money.
 ![image](https://github.com/user-attachments/assets/c81d2631-2bae-439e-8ac4-ea18729c4e45)
 
 ## Electricity market 101
-Electricity is priced according to 'marginal cost pricing', which means the 
+
+### Marginal cost pricing
+Electricity, in the vast  is priced according to 'marginal cost pricing', which means the price is set by the bid of the final unit of generation (supply) that is required to meet energy demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the the most expensive generator once bids are ordered.
 ![image](https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a)
 
 
