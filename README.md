@@ -1,11 +1,11 @@
 # Energy Storage Arbitrage Revenue Optimization
 
-## Context
+# Context
 
-# Energy arbitrage
+## Energy arbitrage
 ![image](https://github.com/user-attachments/assets/c81d2631-2bae-439e-8ac4-ea18729c4e45)
 
-# Electricity market 101
+## Electricity market 101
 Electricity is priced according to 'marginal cost pricing', which means the 
 ![image](https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a)
 
