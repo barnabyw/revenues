@@ -6,6 +6,12 @@
 Energy arbitrage is buying power at low prices and selling at high prices, to generate a profit. It is the primary way energy storage systems make their money. This code for analysing how much profit can be generated in different countries from energy arbitrage.
 ![image](https://github.com/user-attachments/assets/c81d2631-2bae-439e-8ac4-ea18729c4e45)
 
+### Sources of data
+Europe (inc. UK): https://ember-energy.org/data/european-wholesale-electricity-price-data/
+USA: https://www.gridstatus.io/
+Chile: https://www.coordinador.cl/costos-marginales/
+For other regions, data is generally available on the website of the energy system operator. Day-ahead prices are the most available, with others usually paid.
+
 ## Electricity market 101
 
 ### Marginal cost pricing
@@ -19,9 +25,9 @@ Day-ahead markets are where the majority of energy is traded, and where data is 
 
 ### Other revenue streams
 
-A major source of revenue, particularly in the UK is the balancing mechanism
+There are other mechanisms that reward energy storage assets outside of energy trading. These include th balancing mechanism, a major source in the UK. Capacity markets operate in most countries and pay a fixed price for power capacity, which is reduced for short durations. (Australia is an [exception](https://www.gridcog.com/blog/capacity-markets-vs-energy-only-markets#:~:text=Capacity%20markets%20give%20more%20direct,of%20revenue%20certainty%20for%20investors.)), which
 
-There are other mechanisms that reward energy storage assets outside of energy trading. Capacity markets operate in most countries and pay a fixed price for power capacity, which is reduced for short durations. In   (Australia is an [exception](https://www.gridcog.com/blog/capacity-markets-vs-energy-only-markets#:~:text=Capacity%20markets%20give%20more%20direct,of%20revenue%20certainty%20for%20investors.)), which
+Further reading on the fundamentals of energy storage revenues: [Monetizing Energy Storage](https://global.oup.com/academic/product/monetizing-energy-storage-9780192888174?cc=gb&lang=en&#)
 
 # Script setup and features
 This script calculates the arbitrage revenue potential for energy storage systems using market price data. It allows the calculation of optimal arbitrage profit, no. of cycles, avg. buy and sell prices, subject to different storage parameters. It employs the OR-Tools optimization library to simulate optimal charging and discharging behavior based on specified storage parameters.
