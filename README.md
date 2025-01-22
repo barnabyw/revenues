@@ -34,7 +34,7 @@ This script calculates the arbitrage revenue potential for energy storage system
 - Outputs results to CSV files for visualisation/further analysis.
 
 ## Requirements
-- Python 3.x
+- Python 3.x (tested with versions up to 3.11)
 - Required Python libraries:
   - pandas
   - ortools
