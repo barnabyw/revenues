@@ -27,8 +27,8 @@ max_soc = 1  # Maximum SOC (proportion of energy capacity)
 # Loop information
 files = ['Poland', 'United Kingdom'] # loop through these files within input_folder
 years_mode = ""  # Set to 'auto' to use all years in the data (will loop through)
-select_years = list(range(2019, 2025))  # Specify the range of years to process
-hours_list = list(range(1,17)) # hours of storage duration to loop through
+select_years = list(range(2023, 2025))  # Specify the range of years to process
+rte_list = [x/100 for x in range(75,86)]
 
 # Format of input price data
 datetime_col = "Datetime (Local)" # the column heading containing time data
@@ -53,7 +53,7 @@ cost_per_mw = {
 central_results = []
 
 # Helper functions
-def spread(df, hrs):
+def spread(df, rte):
     df['date'] = pd.to_datetime(df['datetime']).dt.date
     top_hours = df.groupby('date', group_keys=False).apply(lambda x: x.nlargest(hrs, 'price')).reset_index(drop=True)
     bottom_hours = df.groupby('date', group_keys=False).apply(lambda x: x.nsmallest(hrs, 'price')).reset_index(drop=True)
@@ -69,7 +69,7 @@ def spread(df, hrs):
     daily_spread['daily_spread'] = daily_spread['top_avg'] - daily_spread['bottom_avg']
     return daily_spread
 
-def calculate_arbitrage_revenue(df, hrs):
+def calculate_arbitrage_revenue(df, rte):
     battery_capacity = max_discharge_rate * hrs
     time_steps = len(df)
     solver = pywraplp.Solver.CreateSolver("CBC")
@@ -136,8 +136,8 @@ for file in files:
     else:
         years = select_years
 
-    for hours in hours_list:
-        print(f"Processing {file} for {hours} hours...")
+    for efficiency in rte_list:
+        print(f"Processing {file} for {efficiency} % RTE...")
 
         for year in years:
             yearly_df = df[df['datetime'].dt.year == year]
@@ -146,8 +146,8 @@ for file in files:
                 continue
 
             # Calculate spread for the specific year and hours
-            daily_spread = spread(yearly_df, hours)
-            results, total_profit, cycles, avg_sell_price, avg_buy_price = calculate_arbitrage_revenue(yearly_df, hours)
+            daily_spread = spread(yearly_df, efficiency)
+            results, total_profit, cycles, avg_sell_price, avg_buy_price = calculate_arbitrage_revenue(yearly_df, efficiency)
             if results is not None:
                 """Use the line below to save operational (hour by hour) data for an optimisation run"""
                # results.to_csv(os.path.join(results_folder, f"{file}_{year}_{hours}_arbitrage_results.csv")) 
@@ -155,17 +155,18 @@ for file in files:
                 central_results.append({
                     "Country": file,
                     "Year": year,
-                    "System duration (hrs)": hours,
+                    "System duration (hrs)": hrs,
+                    "RTE": efficiency,
                     "daily_spread_avg": round(daily_spread['daily_spread'].mean(), 2),
                     "Total arbitrage profit": round(total_profit, 2),
                     "Cycles (full cycle equivalents)": round(cycles, 2),
                     "Avg sell price (/MWh)": round(avg_sell_price, 2),
                     "Avg purchase price (/MWh)": round(-avg_buy_price, 2),
-                    "Cost €/MW": round(cost_per_mw.get(hours, 0), 2)
+                    "Cost €/MW": round(cost_per_mw.get(hrs, 0), 2)
                 })
 
 # Save central results to a CSV
 central_results_df = pd.DataFrame(central_results)
-central_results_df.to_csv(os.path.join(results_folder, "arbitrage_results.csv"), index=False)
+central_results_df.to_csv(os.path.join(results_folder, "arbitrage_results_efficiency.csv"), index=False)
 
 print("Processing complete.")

@@ -6091,3 +6091,4 @@
        2.e+01, 3.e+01, 4.e+01, 5.e+01, 6.e+01, 7.e+01, 8.e+01, 9.e+01,
        2.e+02, 3.e+02, 4.e+02, 5.e+02, 6.e+02, 7.e+02, 8.e+02, 9.e+02,
        2.e+03, 3.e+03, 4.e+03, 5.e+03, 6.e+03, 7.e+03, 8.e+03, 9.e+03])
+2025-01-20 14:22:19,585 - DEBUG - handle_close[f4487f5ec10f11efae4f72e65ef165a2]({'header': {'msg_id': '439b93f6-212a3339e8804150c2a44fe2_83282_1003', 'msg_type': 'comm_close', 'username': 'barnabywinser', 'session': '439b93f6-212a3339e8804150c2a44fe2', 'date': datetime.datetime(2025, 1, 20, 14, 22, 19, 562676, tzinfo=tzutc()), 'version': '5.3'}, 'msg_id': '439b93f6-212a3339e8804150c2a44fe2_83282_1003', 'msg_type': 'comm_close', 'parent_header': {}, 'metadata': {}, 'content': {'comm_id': 'f4487f5ec10f11efae4f72e65ef165a2', 'data': {}}, 'buffers': []})
