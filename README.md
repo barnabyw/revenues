@@ -16,7 +16,6 @@
     - [Installation]
     - [Usage]
     - [Input Data Format]
-    - [Input Data Sources]
     - [Output]
     - [Configuration]
 5. [Next Steps](#next-steps)
