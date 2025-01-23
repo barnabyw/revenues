@@ -6,7 +6,7 @@
 2. [Context](#context)
     - [Energy Arbitrage](#energy-arbitrage)
     - [Sources of Data](#sources-of-data)
-3. [Electricity Market 101](#electricity-market-101)
+3. [Electricity Market 101](#electricity-market)
     - [Marginal Cost Pricing](#marginal-cost-pricing)
     - [Multiple Markets](#multiple-markets)
     - [Other Revenue Streams](#other-revenue-streams)
@@ -22,7 +22,7 @@
 5. [Next Steps](#next-steps)
 6. [Full Startup Instructions](#full-startup-instructions)
 
-## Example Output
+## <a name="example-output"></a>Example Output
 
 ![image](https://github.com/user-attachments/assets/f8d65a8c-4398-4b39-941c-a1782c29278e)
 
@@ -44,7 +44,7 @@ Energy arbitrage is buying power at low prices and selling at high prices to gen
 - Chile: [Coordinador](https://www.coordinador.cl/costos-marginales/)
 - For other regions, data is generally available on the website of the energy system operator. Day-ahead prices are the most available, with others usually paid.
 
-## Electricity Market 101
+## Electricity market 101 {#electricity-market}
 
 ### Marginal Cost Pricing
 Electricity, in the vast majority of countries, is priced according to 'marginal cost pricing' which means the price is set by the bid of the final unit of generation (supply) that is required to meet electricity demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the most expensive generator once bids are ordered.
