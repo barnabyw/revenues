@@ -1,5 +1,14 @@
 # Energy Storage Arbitrage Revenue Optimization
 
+# Example output:
+<img width="900" alt="image" src="https://github.com/user-attachments/assets/f8d65a8c-4398-4b39-941c-a1782c29278e" />
+
+Results from `arbitrage_loop.py`, visualised with Tableau
+
+<img width="900" alt="image" src="https://github.com/user-attachments/assets/182c0a3c-0b51-4df4-bb6f-e13572c9a0c6" />
+
+Results from `arbitrage_loop_effiency.py`, visualised with Tableau
+
 # Context
 
 ## Energy arbitrage
@@ -16,7 +25,8 @@ For other regions, data is generally available on the website of the energy syst
 
 ### Marginal cost pricing
 Electricity, in the vast majority of countries, is priced according to 'marginal cost pricing' which means the price is set by the bid of the final unit of generation (supply) that is required to meet electricity demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the the most expensive generator once bids are ordered.
-![image](https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a)
+
+<img width="450" alt="image" src="https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a" />
 
 ### Multiple markets
 There are several markets, within countries, where power is bought and sold (wholesale markets). They mostly work with marginal cost pricing, but operate over different timeframes and have different objectives. [Modo](https://modoenergy.com/research/wholesale-trading-markets-explainer-gb-n2ex-epex-dayahead-intraday) have a helpful explainer for these different markets in terms of wholesale trading.
