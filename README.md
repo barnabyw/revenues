@@ -4,21 +4,21 @@
 
 1. [Example Output](#example-output)
 2. [Context](#context)
-    - [Energy Arbitrage](#energy-arbitrage)
-    - [Sources of Data](#sources-of-data)
+    - [Energy Arbitrage]
+    - [Sources of Data]
 3. [Electricity Market 101](#electricity-market)
-    - [Marginal Cost Pricing](#marginal-cost-pricing)
-    - [Multiple Markets](#multiple-markets)
-    - [Other Revenue Streams](#other-revenue-streams)
+    - [Marginal Cost Pricing]
+    - [Multiple Markets]
+    - [Other Revenue Streams]
 4. [Script Setup and Features](#script-setup-and-features)
-    - [Features](#features)
-    - [Requirements](#requirements)
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Input Data Format](#input-data-format)
-    - [Input Data Sources](#input-data-sources)
-    - [Output](#output)
-    - [Configuration](#configuration)
+    - [Features]
+    - [Requirements]
+    - [Installation]
+    - [Usage]
+    - [Input Data Format]
+    - [Input Data Sources]
+    - [Output]
+    - [Configuration]
 5. [Next Steps](#next-steps)
 6. [Full Startup Instructions](#full-startup-instructions)
 
@@ -32,7 +32,7 @@ Results from `arbitrage_loop.py`, visualised with Tableau
 
 Results from `arbitrage_loop_effiency.py`, visualised with Tableau
 
-## Context
+## <a name="context"></a>Context
 
 ### Energy Arbitrage
 Energy arbitrage is buying power at low prices and selling at high prices to generate a profit. It is the primary way energy storage systems make their money. This code is for analysing how much profit can be generated in different countries from energy arbitrage.
@@ -44,7 +44,7 @@ Energy arbitrage is buying power at low prices and selling at high prices to gen
 - Chile: [Coordinador](https://www.coordinador.cl/costos-marginales/)
 - For other regions, data is generally available on the website of the energy system operator. Day-ahead prices are the most available, with others usually paid.
 
-## Electricity market 101 {#electricity-market}
+## <a name="electricity-market"></a>Electricity market 101
 
 ### Marginal Cost Pricing
 Electricity, in the vast majority of countries, is priced according to 'marginal cost pricing' which means the price is set by the bid of the final unit of generation (supply) that is required to meet electricity demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the most expensive generator once bids are ordered.
@@ -64,7 +64,7 @@ There are other mechanisms that reward energy storage assets outside of energy t
 
 Further reading on the fundamentals of energy storage revenues: [Monetizing Energy Storage](https://global.oup.com/academic/product/monetizing-energy-storage-9780192888174?cc=gb&lang=en&#)
 
-# Script setup and features
+# <a name="script-setup-and-features"></a>Script Setup and Features
 This script calculates the arbitrage revenue potential for energy storage systems using market price data. It allows the calculation of optimal arbitrage profit, no. of cycles, avg. buy and sell prices, subject to different storage parameters. It employs the OR-Tools optimization library to simulate optimal charging and discharging behavior based on specified storage parameters.
 
 ## Features
