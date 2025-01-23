@@ -125,7 +125,12 @@ This script calculates the arbitrage revenue potential for energy storage system
   - Hourly storage durations to evaluate.
  
 ## Next steps
-- An improvement could be to save new results centrally to a database that contains previous runs
+- An improvement could be to save new results centrally to a database that contains previous runs, without them having to be repeated each time. The
+    ```bash
+    years x countries.py
+   ```
+  did this, but using a suboptimal spread function rather than optimised arbitrage. It shows how this could be approached.
+   
 
 
 # Full startup intructions
