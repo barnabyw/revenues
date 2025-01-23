@@ -139,13 +139,13 @@ This script calculates the arbitrage revenue potential for energy storage system
 
 ## Use the following commands
 
-## 1. Clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/barnabyw/revenues/
 cd <your-repo-folder>
 ```
 
-## 2. Set Up a Virtual Environment
+### 2. Set Up a Virtual Environment
 Create a new Python virtual environment:
 ```bash
 python3 -m venv venv
@@ -161,14 +161,21 @@ On Windows:
 venv\Scripts\activate
 ```
 
-## 3. Install Dependencies
+### 3. Navigate back to the repo directory
+Ensure you have a requirements.txt file in the repository. Install the dependencies:
+
+```bash
+cd <your-repo-folder>
+```
+
+### 4. Install Dependencies
 Ensure you have a requirements.txt file in the repository. Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 4. Run the script
+### 5. Run the script
 Run the script:
 ```bash
 python arbitrage_loop.py
