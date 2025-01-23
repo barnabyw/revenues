@@ -36,12 +36,13 @@ Results from `arbitrage_loop_effiency.py`, visualised with Tableau
 
 ### Energy Arbitrage
 Energy arbitrage is buying power at low prices and selling at high prices to generate a profit. It is the primary way energy storage systems make their money. This code is for analysing how much profit can be generated in different countries from energy arbitrage.
+
 ![image](https://github.com/user-attachments/assets/c81d2631-2bae-439e-8ac4-ea18729c4e45)
 
 ### Sources of Data
-- Europe (including the UK): [Ember Energy](https://ember-energy.org/data/european-wholesale-electricity-price-data/)
+- Europe (including the UK): [Ember](https://ember-energy.org/data/european-wholesale-electricity-price-data/)
 - USA: [GridStatus](https://www.gridstatus.io/)
-- Chile: [Coordinador](https://www.coordinador.cl/costos-marginales/)
+- Chile: [Coordinador Electrico Nacional](https://www.coordinador.cl/costos-marginales/)
 - For other regions, data is generally available on the website of the energy system operator. Day-ahead prices are the most available, with others usually paid.
 
 ## <a name="electricity-market"></a>Electricity market 101
@@ -105,13 +106,9 @@ This script calculates the arbitrage revenue potential for energy storage system
 ## Input Data Format
 - CSV files with the following columns:
   - `Datetime`: a column containing time intervals. The format can be specified using the `datetime_format` parameter and the column header by the `datetime_col` parameter.
-  - `Price`: Market price data. The column header can be specified with `price_col`.
-
-## Input Data Sources
+  - `Price`: Electricity price data. The column header can be specified with `price_col`.
 - The `input_data` folder comes with German, Polish and United Kingdom hourly day-ahead electricity prices from 2016 to the start of 2025 as default.
-- These were downloaded from Ember https://ember-energy.org/data/european-wholesale-electricity-price-data/, which provides a user friendly, cleaned dataset of European day-ahead market prices.
-- For prices from the USA, gridstatus is a good tool.
-- For other juristictions, price data is often available from the energy system operator. E.g. Chile: https://www.coordinador.cl/costos-marginales/
+- These were downloaded from Ember https://ember-energy.org/data/european-wholesale-electricity-price-data/, which provides a user friendly, cleaned dataset of European day-ahead market prices. See above for other sources.
 
 ## Output
 - CSV files with daily price spreads and arbitrage revenue results.
