@@ -70,7 +70,13 @@ This script calculates the arbitrage revenue potential for energy storage system
    ```bash
    python arbitrage_loop.py
    ```
-4. Results will be saved in the specified results folder.
+   which by default loops through different durations of storage.
+   or
+   ```bash
+   python arbitrage_loop_efficiency.py
+   ```
+   which by default loops through different round trip efficiencies.
+5. Results will be saved in the specified results folder.
 
 ## Input Data Format
 - CSV files with the following columns:
@@ -85,7 +91,7 @@ This script calculates the arbitrage revenue potential for energy storage system
 
 ## Output
 - CSV files with daily price spreads and arbitrage revenue results.
-- Summary of results across all files and configurations saved in `central_results_2.csv`.
+- Summary of results across all files and configurations saved in `arbitrage_results.csv`.
 
 ## Configuration
 - Adjust the following parameters in the script as needed:
@@ -93,6 +99,10 @@ This script calculates the arbitrage revenue potential for energy storage system
   - Input and results folder paths.
   - List of files and years to process.
   - Hourly storage durations to evaluate.
+ 
+## Next steps
+- An improvement could be to save new results centrally to a database that contains previous runs
+
 
 # Full startup intructions
 
