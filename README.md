@@ -5,7 +5,8 @@
 
 Results from `arbitrage_loop.py`, visualised with Tableau
 
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/182c0a3c-0b51-4df4-bb6f-e13572c9a0c6" />
+<img width="900" alt="image" src="https://github.com/user-attachments/assets/37fd6032-230b-4377-ba02-829cf6f023cd" />
+
 
 Results from `arbitrage_loop_effiency.py`, visualised with Tableau
 
