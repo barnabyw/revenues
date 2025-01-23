@@ -1,36 +1,60 @@
 # Energy Storage Arbitrage Revenue Optimization
 
-# Example output:
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/f8d65a8c-4398-4b39-941c-a1782c29278e" />
+## Table of Contents
+
+1. [Example Output](#example-output)
+2. [Context](#context)
+    - [Energy Arbitrage](#energy-arbitrage)
+    - [Sources of Data](#sources-of-data)
+3. [Electricity Market 101](#electricity-market-101)
+    - [Marginal Cost Pricing](#marginal-cost-pricing)
+    - [Multiple Markets](#multiple-markets)
+    - [Other Revenue Streams](#other-revenue-streams)
+4. [Script Setup and Features](#script-setup-and-features)
+    - [Features](#features)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Input Data Format](#input-data-format)
+    - [Input Data Sources](#input-data-sources)
+    - [Output](#output)
+    - [Configuration](#configuration)
+5. [Next Steps](#next-steps)
+6. [Full Startup Instructions](#full-startup-instructions)
+
+## Example Output
+
+![image](https://github.com/user-attachments/assets/f8d65a8c-4398-4b39-941c-a1782c29278e)
 
 Results from `arbitrage_loop.py`, visualised with Tableau
 
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/37fd6032-230b-4377-ba02-829cf6f023cd" />
-
+![image](https://github.com/user-attachments/assets/37fd6032-230b-4377-ba02-829cf6f023cd)
 
 Results from `arbitrage_loop_effiency.py`, visualised with Tableau
 
-# Context
+## Context
 
-## Energy arbitrage
-Energy arbitrage is buying power at low prices and selling at high prices, to generate a profit. It is the primary way energy storage systems make their money. This code for analysing how much profit can be generated in different countries from energy arbitrage.
+### Energy Arbitrage
+Energy arbitrage is buying power at low prices and selling at high prices to generate a profit. It is the primary way energy storage systems make their money. This code is for analysing how much profit can be generated in different countries from energy arbitrage.
 ![image](https://github.com/user-attachments/assets/c81d2631-2bae-439e-8ac4-ea18729c4e45)
 
-### Sources of data
-Europe (inc. UK): https://ember-energy.org/data/european-wholesale-electricity-price-data/
-USA: https://www.gridstatus.io/
-Chile: https://www.coordinador.cl/costos-marginales/
-For other regions, data is generally available on the website of the energy system operator. Day-ahead prices are the most available, with others usually paid.
+### Sources of Data
+- Europe (including the UK): [Ember Energy](https://ember-energy.org/data/european-wholesale-electricity-price-data/)
+- USA: [GridStatus](https://www.gridstatus.io/)
+- Chile: [Coordinador](https://www.coordinador.cl/costos-marginales/)
+- For other regions, data is generally available on the website of the energy system operator. Day-ahead prices are the most available, with others usually paid.
 
-## Electricity market 101
+## Electricity Market 101
 
-### Marginal cost pricing
-Electricity, in the vast majority of countries, is priced according to 'marginal cost pricing' which means the price is set by the bid of the final unit of generation (supply) that is required to meet electricity demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the the most expensive generator once bids are ordered.
+### Marginal Cost Pricing
+Electricity, in the vast majority of countries, is priced according to 'marginal cost pricing' which means the price is set by the bid of the final unit of generation (supply) that is required to meet electricity demand. In the example below, this is a coal unit. The bids of all generators are ordered in price, then their power capacities are added together until demand is met. The price is the most expensive generator once bids are ordered.
 
-<img width="450" alt="image" src="https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a" />
+![image](https://github.com/user-attachments/assets/b794b76a-1b7b-4df7-a59e-263a2bde774a)
 
-### Multiple markets
+### Multiple Markets
 There are several markets, within countries, where power is bought and sold (wholesale markets). They mostly work with marginal cost pricing, but operate over different timeframes and have different objectives. [Modo](https://modoenergy.com/research/wholesale-trading-markets-explainer-gb-n2ex-epex-dayahead-intraday) have a helpful explainer for these different markets in terms of wholesale trading.
+
+Day-ahead markets are where the majority of energy is traded, and where data is most widely available. However, it is important to note that day-ahead markets usually have the least volatile shapes and therefore trading 
 
 Day-ahead markets are where the majority of energy is traded, and where data is most widely available. However, it is important to note that day-ahead markets usually have the least volatile shapes and therefore trading across multiple markets will increase revenue. In GB, [Modo](https://modoenergy.com/research/jan-24-forecast-update-bess-revenues-intraday-prices-dispatch-battery-energy-storage-model?&utm_source=linkedin&utm_medium=main&utm_campaign=15_01_2025) estimated that there is a 30-35% uplift in revenues when trading in the intraday and day-ahead markets vs. just the day-ahead. This could be an appropriate uplift for revenues derived using this script.
 
