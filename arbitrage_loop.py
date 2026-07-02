@@ -14,8 +14,12 @@ input_folder = os.path.join(script_dir, "input_data")
 results_folder = os.path.join(script_dir, "results")
 os.makedirs(results_folder, exist_ok=True)
 
+# Time interval of input data
+time_interval_mins = 5
+dt = time_interval_mins / 60  # hours per timestep
+
 # Parameters for storage
-rte = 0.8  # Round-trip efficiency
+rte = 0.95  # Round-trip efficiency
 max_charge_rate = 1  # MW
 max_discharge_rate = 1 # MW
 hrs = 4  # hours of storage duration
@@ -25,15 +29,16 @@ min_soc = 0  # Minimum SOC (proportion of energy capacity)
 max_soc = 1  # Maximum SOC (proportion of energy capacity)
 
 # Loop information
-files = ['Poland', 'United Kingdom'] # loop through these files within input_folder
+files = ['NEM'] # loop through these files within input_folder
+region = 'NSW1'
 years_mode = ""  # Set to 'auto' to use all years in the data (will loop through)
-select_years = list(range(2019, 2025))  # Specify the range of years to process
-hours_list = list(range(1,17)) # hours of storage duration to loop through
+select_years = list(range(2024, 2026))  # Specify the range of years to process
+hours_list = list(range(1,12)) # hours of storage duration to loop through
 
 # Format of input price data
-datetime_col = "Datetime (Local)" # the column heading containing time data
+datetime_col = "SETTLEMENTDATE" # the column heading containing time data
 datetime_format = "%Y-%m-%d %H:%M:%S" # the format of the time data
-price_col = "Price (EUR/MWhe)" # the column for price data
+price_col = "RRP" # the column for price data
 
 # Cost €/MW values for each hour
 cost_per_mw = {
@@ -60,9 +65,19 @@ central_results = []
 
 # Helper functions
 def spread(df, hrs):
+    df = df.copy()
     df['date'] = pd.to_datetime(df['datetime']).dt.date
-    top_hours = df.groupby('date', group_keys=False).apply(lambda x: x.nlargest(hrs, 'price')).reset_index(drop=True)
-    bottom_hours = df.groupby('date', group_keys=False).apply(lambda x: x.nsmallest(hrs, 'price')).reset_index(drop=True)
+
+    # Convert storage duration in hours into number of data intervals
+    intervals = int(round(hrs / dt))
+
+    top_hours = df.groupby('date', group_keys=False).apply(
+        lambda x: x.nlargest(intervals, 'price')
+    ).reset_index(drop=True)
+
+    bottom_hours = df.groupby('date', group_keys=False).apply(
+        lambda x: x.nsmallest(intervals, 'price')
+    ).reset_index(drop=True)
 
     top_avg = top_hours.groupby('date')['price'].mean()
     bottom_avg = bottom_hours.groupby('date')['price'].mean()
@@ -72,52 +87,64 @@ def spread(df, hrs):
         'top_avg': top_avg.values,
         'bottom_avg': bottom_avg.values
     })
+
     daily_spread['daily_spread'] = daily_spread['top_avg'] - daily_spread['bottom_avg']
+
     return daily_spread
 
 def calculate_arbitrage_revenue(df, hrs):
-    battery_capacity = max_discharge_rate * hrs
+    battery_capacity = max_discharge_rate * hrs  # MWh
     time_steps = len(df)
     solver = pywraplp.Solver.CreateSolver("CBC")
     inf = solver.infinity()
 
-    charge = [solver.NumVar(0, max_charge_rate, f"charge_{t}") for t in range(time_steps)]
-    discharge = [solver.NumVar(0, max_discharge_rate, f"discharge_{t}") for t in range(time_steps)]
+    charge = [solver.NumVar(0, max_charge_rate, f"charge_{t}") for t in range(time_steps)]  # MW
+    discharge = [solver.NumVar(0, max_discharge_rate, f"discharge_{t}") for t in range(time_steps)]  # MW
     soc = [solver.NumVar(min_soc, max_soc, f"soc_{t}") for t in range(time_steps)]
 
     for t in range(time_steps):
         if t == 0:
             solver.Add(
-                soc[t] == initial_soc + (charge[t] / battery_capacity) * rte - (discharge[t] / battery_capacity)
+                soc[t] == initial_soc
+                + ((charge[t] * dt) / battery_capacity) * rte
+                - ((discharge[t] * dt) / battery_capacity)
             )
         else:
             solver.Add(
-                soc[t] == soc[t - 1] + (charge[t] / battery_capacity) * rte - (discharge[t] / battery_capacity)
+                soc[t] == soc[t - 1]
+                + ((charge[t] * dt) / battery_capacity) * rte
+                - ((discharge[t] * dt) / battery_capacity)
             )
 
     objective = solver.Objective()
+
     for t in range(time_steps):
-        objective.SetCoefficient(discharge[t], df.iloc[t]['price'])
-        objective.SetCoefficient(charge[t], -df.iloc[t]['price'])
+        objective.SetCoefficient(discharge[t], df.iloc[t]['price'] * dt)
+        objective.SetCoefficient(charge[t], -df.iloc[t]['price'] * dt)
+
     objective.SetMaximization()
 
     status = solver.Solve()
 
     if status == solver.OPTIMAL:
         results = pd.DataFrame({
-            "charge": [charge[t].solution_value() for t in range(time_steps)],
-            "discharge": [discharge[t].solution_value() for t in range(time_steps)],
+            "charge": [charge[t].solution_value() for t in range(time_steps)],  # MW
+            "discharge": [discharge[t].solution_value() for t in range(time_steps)],  # MW
             "soc": [soc[t].solution_value() for t in range(time_steps)],
             "price": df['price'].values
         }, index=df.index)
 
-        results['revenue'] = results['discharge'] * results['price']
-        results['cost'] = -results['charge'] * results['price']
+        # Convert MW dispatch into MWh per 5-minute interval
+        results['charge_mwh'] = results['charge'] * dt
+        results['discharge_mwh'] = results['discharge'] * dt
+
+        results['revenue'] = results['discharge_mwh'] * results['price']
+        results['cost'] = -results['charge_mwh'] * results['price']
         results['profit'] = results['revenue'] + results['cost']
 
-        total_profit = results['profit'].sum() # £
-        total_discharge = results['discharge'].sum() # MWh
-        total_charge = results['charge'].sum() # MWh
+        total_profit = results['profit'].sum()
+        total_discharge = results['discharge_mwh'].sum()
+        total_charge = results['charge_mwh'].sum()
 
         cycles = total_discharge / battery_capacity if battery_capacity > 0 else 0
         avg_sell_price = results['revenue'].sum() / total_discharge if total_discharge > 0 else 0
@@ -126,6 +153,7 @@ def calculate_arbitrage_revenue(df, hrs):
         print(f"Total Arbitrage Profit {year}: {total_profit:.2f} EUR")
 
         return results, total_profit, cycles, avg_sell_price, avg_buy_price
+
     else:
         print(f"No optimal solution found for {file} in {year}.")
         return None, 0, 0, 0, 0
@@ -133,6 +161,7 @@ def calculate_arbitrage_revenue(df, hrs):
 # Main loop
 for file in files:
     df = pd.read_csv(os.path.join(input_folder, file + ".csv"))
+    df = df[df['REGIONID'] == region]  # Filter for NEM region if needed
     df.rename(columns={datetime_col: 'datetime', price_col: 'price'}, inplace=True)
     df['datetime'] = pd.to_datetime(df['datetime'], format=datetime_format)
     df = df[['datetime', 'price']]
@@ -147,16 +176,22 @@ for file in files:
 
         for year in years:
             yearly_df = df[df['datetime'].dt.year == year]
+
             if yearly_df.empty:
                 print(f"No data for {year} in {file}.")
                 continue
 
             # Calculate spread for the specific year and hours
             daily_spread = spread(yearly_df, hours)
-            results, total_profit, cycles, avg_sell_price, avg_buy_price = calculate_arbitrage_revenue(yearly_df, hours)
+
+            results, total_profit, cycles, avg_sell_price, avg_buy_price = calculate_arbitrage_revenue(
+                yearly_df,
+                hours
+            )
+
             if results is not None:
-                """Use the line below to save operational (hour by hour) data for an optimisation run"""
-               # results.to_csv(os.path.join(results_folder, f"{file}_{year}_{hours}_arbitrage_results.csv")) 
+                """Use the line below to save operational data for an optimisation run"""
+                # results.to_csv(os.path.join(results_folder, f"{file}_{year}_{hours}_arbitrage_results.csv"))
 
                 central_results.append({
                     "Country": file,
