@@ -3,6 +3,10 @@ import os
 from ortools.linear_solver import pywraplp
 import warnings
 
+# Time interval of input data
+time_interval_mins = 5
+dt = time_interval_mins / 60  # hours per timestep
+
 # Helper functions
 def spread(df, hrs):
     df = df.copy()

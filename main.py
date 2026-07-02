@@ -3,7 +3,7 @@ import os
 from ortools.linear_solver import pywraplp
 import warnings
 
-from arbitrage_loop_nem import spread, calculate_arbitrage_revenue
+from arbitrage_loop_nem import spread, calculate_arbitrage_revenue, dt, time_interval_mins
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -22,10 +22,6 @@ region_select = ['NSW1']  # loop through these regions within the data or all if
 years_mode = ""  # Set to 'auto' to use all years in the data (will loop through)
 select_years = list(range(2024, 2027))  # Specify the range of years to process
 hours_list = list(range (1, 4)) # (1,12)) # hours of storage duration to loop through
-
-# Time interval of input data
-time_interval_mins = 5
-dt = time_interval_mins / 60  # hours per timestep
 
 # Format of input price data
 datetime_col = "SETTLEMENTDATE" # the column heading containing time data
@@ -60,11 +56,12 @@ for file in files:
     all_df = pd.read_csv(os.path.join(input_folder, file + ".csv"))
     all_df.rename(columns={datetime_col: 'datetime', price_col: 'price'}, inplace=True)
     all_df['datetime'] = pd.to_datetime(all_df['datetime'], format=datetime_format)
-    regions = [region_select] if region_select else all_df['REGIONID'].unique()
+    regions = region_select if region_select else all_df['REGIONID'].unique()
 
     for region in regions:
+        print(f"Processing region: {region}")
         df = all_df[['datetime', 'price', 'REGIONID']].copy()
-        df = df[df['REGIONID'] == region]  # Filter for NEM region if needed
+        df = df[df['REGIONID'] == region]
 
         if years_mode == 'auto':
             years = sorted(df['datetime'].dt.year.unique().tolist())
@@ -72,6 +69,7 @@ for file in files:
             years = select_years
 
         for hours in hours_list:
+            print(f"hours list is {hours_list}")
             print(f"Processing {region} for {hours} hours...")
 
             for year in years:
